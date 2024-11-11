@@ -1,0 +1,61 @@
+/* Set a base dark background color for the whole page */
+body {
+  background-color: #1a1a1a; /* Dark gray */
+  color: #f0f0f0; /* Light text color for contrast */
+  font-family: Arial, sans-serif;
+}
+
+/* Style the main container to stand out */
+.container {
+  padding: 20px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Adjust table colors */
+.table {
+  background-color: #ffffff;
+}
+
+.table-dark th {
+  background-color: #333333;
+  color: #f0f0f0;
+}
+
+/* Button Styles */
+.btn-primary {
+  background-color: #4caf50; /* Green */
+  border: none;
+}
+
+.btn-primary:hover {
+  background-color: #45a049;
+}
+
+.btn-danger {
+  background-color: #ff4d4d; /* Red */
+  border: none;
+}
+
+.btn-danger:hover {
+  background-color: #ff3333;
+}
+
+.btn-success {
+  background-color: #007bff; /* Blue */
+  border: none;
+}
+
+.btn-success:hover {
+  background-color: #0069d9;
+}
+
+/* Centering h1 */
+h1 {
+  color: #f0f0f0; /* Light color for contrast */
+}
+
+/* Customizing modal styles */
+.modal-content {
+  background-color: #333333; /* Darker modal background */
+  color: #f0f0f0; /* Light text for readability */
+}
