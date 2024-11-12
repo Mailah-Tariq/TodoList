@@ -1,5 +1,5 @@
 // TodoList.js
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchTodos, deleteTodo } from '../redux/todoSlice';
 import TodoModal from './TodoModal';
@@ -8,62 +8,72 @@ const TodoList = () => {
   const dispatch = useDispatch();
   const todos = useSelector((state) => state.todos.lists);
 
+  const [modalVisible, setModalVisible] = useState(false);
+  const [selectedTodo, setSelectedTodo] = useState(null);
+
   useEffect(() => {
     dispatch(fetchTodos());
   }, [dispatch]);
 
-  return (
-    <div className="container my-5" 
-    style={{
-        background: 'linear-gradient(to bottom right, #c4e0e5,#4ca1af )',
-        borderRadius: '10px',
-      }}>
-      <h1 className="text-center mb-4">Multi To-Do List</h1>
-      
-      <table className="table table-striped table-bordered">
-        <thead className="table-dark">
-          <tr>
-            <th scope="col">List Name</th>
-            <th scope="col">Task Details</th>
-            <th scope="col">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {todos.map((todo) => (
-            <tr key={todo.id}>
-              <td>{todo.name}</td>
-              <td>{todo.details}</td>
-              <td>
-                <button
-                  className="btn btn-primary btn-sm me-2"
-                  data-bs-toggle="modal"
-                  data-bs-target={`#editModal-${todo.id}`}
-                >
-                  Edit
-                </button>
-                <button
-                  className="btn btn-danger btn-sm"
-                  onClick={() => dispatch(deleteTodo(todo.id))}
-                >
-                  Delete
-                </button>
-                <TodoModal todo={todo} />
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+  const openModal = (todo = null) => {
+    setSelectedTodo(todo);
+    setModalVisible(true);
+  };
 
-      <div className="text-center mt-4" style={{ paddingBottom: '20px' }}>
-        <button
-          className="btn btn-success"
-          data-bs-toggle="modal"
-          data-bs-target="#addModal"
-        >
+  const closeModal = () => {
+    setModalVisible(false);
+    setSelectedTodo(null);
+  };
+
+  return (
+    <div className="container my-5">
+      <div className="d-flex justify-content-between align-items-center mb-4">
+        <h1 className="mb-0">Multi To-Do List</h1>
+        <button className="btn btn-success" onClick={() => openModal()}>
           Add New Task
         </button>
-        <TodoModal />
       </div>
+      
+      {/* Add table-responsive for horizontal scrolling on smaller screens */}
+      <div className="table-responsive">
+        <table className="table table-striped table-bordered">
+          <thead className="table-dark">
+            <tr>
+              <th scope="col">List Name</th>
+              <th scope="col">Task Details</th>
+              <th scope="col" style={{ width: '150px', textAlign: 'center' }}>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {todos.map((todo) => (
+              <tr key={todo.id}>
+                <td>{todo.name}</td>
+                <td>{todo.details}</td>
+                <td>
+                  <div className="d-flex justify-content-center">
+                    <button
+                      className="btn btn-primary btn-sm me-2"
+                      onClick={() => openModal(todo)}
+                      style={{ width: '60px' }}
+                    >
+                      Edit
+                    </button>
+                    <button
+                      className="btn btn-danger btn-sm"
+                      onClick={() => dispatch(deleteTodo(todo.id))}
+                      style={{ width: '60px' }}
+                    >
+                      Delete
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      {modalVisible && <TodoModal todo={selectedTodo} closeModal={closeModal} />}
     </div>
   );
 };

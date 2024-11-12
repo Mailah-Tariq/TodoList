@@ -18,3 +18,10 @@ html{
 main{
   background-color: rgb(224, 228, 230);
 }
+/* Custom CSS for screens 400px or smaller */
+@media (max-width: 400px) {
+  .table-responsive {
+    overflow-x: auto; /* Ensure horizontal scroll is enabled */
+    white-space: nowrap; /* Prevent text wrapping in cells */
+  }
+}

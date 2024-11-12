@@ -26,12 +26,12 @@ export const addTodo = createAsyncThunk('todos/addTodo', async (newTodo) => {
 export const updateTodo = createAsyncThunk('todos/updateTodo', async ({ id, updatedTodo }) => {
   const docRef = doc(db, 'todos', id);
   await updateDoc(docRef, updatedTodo);
-  return { id, ...updatedTodo };
+  return { id, ...updatedTodo };  // Returning updated todo to update the state
 });
 
 export const deleteTodo = createAsyncThunk('todos/deleteTodo', async (id) => {
   await deleteDoc(doc(db, 'todos', id));
-  return id;
+  return id;  // Returning id for efficient state update
 });
 
 const todosSlice = createSlice({
